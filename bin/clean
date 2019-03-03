@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-
-(cd ${SCRIPTDIR}/..; rm lib.zip urls.txt 2> /dev/null || true)
-

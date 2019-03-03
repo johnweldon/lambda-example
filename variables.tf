@@ -1,5 +1,5 @@
-provider "aws" {
-  region = "us-west-2"
+variable "region" {
+  default = "us-west-2"
 }
 
 variable "environment_tag" {
@@ -56,4 +56,8 @@ variable "handler" {
 
 variable "runtime" {
   default = "python3.6"
+}
+
+variable "api_stage_name" {
+  default = "test"
 }

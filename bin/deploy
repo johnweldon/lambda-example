@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-
-(cd ${SCRIPTDIR}/..; terraform apply --auto-approve -no-color | \
-  tee >(sed -e '/base_url/s/^base_url = \([^ ]\)/\1/p;d' >| urls.txt))
