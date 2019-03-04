@@ -16,6 +16,9 @@ build: $(PKG) ## build artifacts
 verify: build ## validate terraform config
 	terraform validate
 
+plan: verify ## show deployment plan
+	terraform plan
+
 deploy: verify ## deploy terraform config
 	terraform apply --auto-approve
 
