@@ -61,3 +61,11 @@ variable "runtime" {
 variable "api_stage_name" {
   default = "test"
 }
+
+variable "base_zone" {
+  default = "example.com"
+}
+
+variable "example_host" {
+  default = "test-lambda"
+}

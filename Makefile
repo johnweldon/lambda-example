@@ -2,7 +2,8 @@ SRC = $(wildcard lib/*.py)
 PKG = lib.zip
 
 FN     = $(shell terraform output function_name)
-URL    = $(shell terraform output base_url)
+URL1   = $(shell terraform output base_url)
+URL2   = $(shell terraform output custom_url)
 REGION = $(shell terraform output region)
 
 all: help
@@ -28,7 +29,8 @@ validate: deploy ## verify deployment succeeded
 		--region $(REGION) \
 		--payload '{"name":"john","qwer":"asdr"}' \
 		--log-type Tail /dev/stdout | jq -r .LogResult | base64 -D
-	curl $(URL)
+	curl $(URL1)
+	curl -iL $(URL2)
 
 $(PKG): $(SRC) ## build zip package
 	cd lib; zip -rq9 ../$(PKG) . -i \*.py

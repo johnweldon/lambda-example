@@ -52,7 +52,7 @@ resource "aws_api_gateway_deployment" "exampleLambdaGatewayDeployment" {
   ]
 
   rest_api_id = "${aws_api_gateway_rest_api.exampleLambdaGateway.id}"
-  stage_name  = "test"
+  stage_name  = "${var.api_stage_name}"
 }
 
 resource "aws_lambda_permission" "exampleLambdaGatewayPermission" {
@@ -61,6 +61,17 @@ resource "aws_lambda_permission" "exampleLambdaGatewayPermission" {
   function_name = "${aws_lambda_function.exampleLambdaFunction.arn}"
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_deployment.exampleLambdaGatewayDeployment.execution_arn}/*/*"
+}
+
+resource "aws_api_gateway_domain_name" "exampleGatewayDN" {
+  domain_name     = "${var.example_host}.${var.base_zone}"
+  certificate_arn = "${aws_acm_certificate_validation.exampleSubdomainCert.certificate_arn}"
+}
+
+resource "aws_api_gateway_base_path_mapping" "exampleGatewayMapping" {
+  api_id      = "${aws_api_gateway_rest_api.exampleLambdaGateway.id}"
+  stage_name  = "${aws_api_gateway_deployment.exampleLambdaGatewayDeployment.stage_name}"
+  domain_name = "${aws_api_gateway_domain_name.exampleGatewayDN.domain_name}"
 }
 
 output "base_url" {
